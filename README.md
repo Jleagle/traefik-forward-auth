@@ -81,6 +81,7 @@ services:
       - SECRET=something-random
       - INSECURE_COOKIE=true # Example assumes no https, do not use in production
     labels:
+      - "traefik.enable=true"
       - "traefik.http.middlewares.traefik-forward-auth.forwardauth.address=http://traefik-forward-auth:4181"
       - "traefik.http.middlewares.traefik-forward-auth.forwardauth.authResponseHeaders=X-Forwarded-User"
       - "traefik.http.services.traefik-forward-auth.loadbalancer.server.port=4181"
@@ -88,6 +89,7 @@ services:
   whoami:
     image: containous/whoami
     labels:
+      - "traefik.enable=true"
       - "traefik.http.routers.whoami.rule=Host(`whoami.mycompany.com`)"
       - "traefik.http.routers.whoami.middlewares=traefik-forward-auth"
 ```
@@ -436,6 +438,7 @@ You can apply labels to selected containers:
 whoami:
   image: containous/whoami
   labels:
+    - "traefik.enable=true"
     - "traefik.http.routers.whoami.rule=Host(`whoami.example.com`)"
     - "traefik.http.routers.whoami.middlewares=traefik-forward-auth"
 ```
